@@ -47,19 +47,19 @@ Player.prototype.render = function (){
  Player.prototype.collision = function() {
     for(var i = 0; i < allEnemies.length; i++) {
         if (this.x < allEnemies[i].x + 50 &&
-        player.x + 50 > allEnemies[i].x &&
-        player.y < allEnemies[i].y + 50 &&
-        player.y + 50 > allEnemies[i].y) {
-            player.x = 10;
-            player.y = 400;
+        this.x + 50 > allEnemies[i].x &&
+        this.y < allEnemies[i].y + 50 &&
+        this.y + 50 > allEnemies[i].y) {
+            this.x = 10;
+            this.y = 400;
 
         }
-        if (player.x > star.x &&
-        player.y < star.y) {
+        if (this.x > star.x &&
+        this.y < star.y) {
             star.x = 700;
             star.y = 700;
-            player.x = 800;
-            player.y = 800;
+            this.x = 800;
+            this.y = 800;
             princess.x = 400;
             princess.y = 5;
             setTimeout (function () {
