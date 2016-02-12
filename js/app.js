@@ -2,7 +2,6 @@ var board_height = 600
 var board_width = 505
 var horizontal_move = 100
 var vertical_move = 83
-var space_above_head 
 
 // Enemy class with location.//
 var Enemy = function (beginX, beginY, speed) {
