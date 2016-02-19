@@ -14,9 +14,6 @@ Use arrow keys to move, avoid the enemy bugs, and reach the star to become a pri
 Control | action
 --------|-------
 up | Player moves up
----|----------------
 down | Player moves down
------|--------------
 left | Player moves left
------|--------------
 right | Player moves right
