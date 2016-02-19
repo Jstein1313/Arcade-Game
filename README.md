@@ -12,11 +12,11 @@ Open index.html in a modern browser
 Use arrow keys to move, avoid the enemy bugs, and reach the star to become a princess
 
 Control | action
-----------------
+--------|-------
 up | Player moves up
---------------------
+---|----------------
 down | Player moves down
---------------------
+-----|--------------
 left | Player moves left
---------------------
+-----|--------------
 right | Player moves right
