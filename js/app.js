@@ -1,7 +1,7 @@
-var board_height = 600
-var board_width = 505
-var horizontal_move = 100
-var vertical_move = 83
+var BOARD_HEIGHT = 600;
+var BOARD_WIDTH = 505;
+var HORIZONTAL_MOVE = 100;
+var VERTICAL_MOVE = 83;
 
 // Enemy class with location.//
 var Enemy = function (beginX, beginY, speed) {
@@ -12,7 +12,7 @@ var Enemy = function (beginX, beginY, speed) {
 
 //Sets random speed for enemy bugs on canvas and off//
 Enemy.prototype.update = function(dt) {
-    if (this.x < board_width) {
+    if (this.x < BOARD_WIDTH) {
         this.x = this.x + (this.speed * dt);
     }
     else {
@@ -30,16 +30,14 @@ Enemy.prototype.render = function() {
 
 var Player = function (x,y) {
     this.sprite = "images/char-boy.png";
-    this.x = 5;
-    this.y = 400;
+    this.reset();  
 };
 
 //Princess class with image location.//
 // Updated engine.js to use image.//
 var Princess = function (x,y) {
     this.sprite = "images/char-princess-girl.png";
-    this.x = 900;
-    this.y = 900;
+    this.reset;
 };
  //Draw player on canvas.//
 Player.prototype.render = function (){
@@ -50,29 +48,34 @@ Player.prototype.render = function (){
 //Reset player to original coordinates when collision with bugs occurs. //
 //Move player and star offscreen and place princess when player reaches star.//
 
- Player.prototype.collision = function() {
-    for(var i = 0; i < allEnemies.length; i++) {
-        if (this.x < allEnemies[i].x + 50 &&
-        this.x + 50 > allEnemies[i].x &&
-        this.y < allEnemies[i].y + 50 &&
-        this.y + 50 > allEnemies[i].y) {
-            this.x = 10;
-            this.y = 400;
+Player.prototype.collision = function() {
+for(var i = 0; i < allEnemies.length; i++) {
+    if (this.x < allEnemies[i].x + 50 &&
+    this.x + 50 > allEnemies[i].x &&
+    this.y < allEnemies[i].y + 50 &&
+    this.y + 50 > allEnemies[i].y) {
+        this.x = 10;
+        this.y = 400;
 
-        }
-        if (this.x > star.x && this.y < star.y) { //collide with star
-            star.x = 700;
-            star.y = 700;
-            this.x = 700;
-            this.y = 700;
-            princess.x = 400;
-            princess.y = 5;
-            setTimeout (function () {
-            reset ();
-           }, 2000);
-        }
-     }
-  };
+    }
+    if (this.x > star.x && this.y < star.y) { //collide with star
+        star.x = 700;
+        star.y = 700;
+        this.x = 700;
+        this.y = 700;
+        princess.x = 400;
+        princess.y = 5;
+        setTimeout (function () {
+        reset ();
+       }, 2000);
+    }
+ }
+};
+
+Player.prototype.reset = function() {
+    this.x = 5;
+    this.y = 400;
+};
 
 //update player prototype and invoke function to check for collision//
 Player.prototype.update = function() {
@@ -81,10 +84,15 @@ Player.prototype.update = function() {
 };
 //Star class with location.
  var Star = function (x,y) {
-    this.x = 400;
-    this.y = 5;
+    this.reset();
     this.sprite = "images/star.png";
 };
+
+Star.prototype.reset = function () {
+    this.x = 400;
+    this.y = 5;
+};
+
 //Draw star on canvas.//
 Star.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
@@ -93,46 +101,52 @@ Star.prototype.render = function () {
  //Draw princess on canvas.//
 Princess.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-} ;
+};
   //prototype update for princess.//
 Princess.prototype.update = function () {
 };
+
+Princess.prototype.reset = function() {
+    this.x = 900;
+    this.y = 900;
+};
+
 //function for keyboard input and setting the canvas boundaries//
 Player.prototype.handleInput = function (key) {
     switch (key) {
         case "left": 
-           if(this.x - horizontal_move > 0) { 
-                this.x = this.x - horizontal_move;
+           if(this.x - HORIZONTAL_MOVE > 0) { 
+                this.x = this.x - HORIZONTAL_MOVE;
             }
             break;
         case "right": 
-            if (this.x + horizontal_move < board_width) {
-               this.x = this.x + horizontal_move;
+            if (this.x + HORIZONTAL_MOVE < BOARD_WIDTH) {
+               this.x = this.x + HORIZONTAL_MOVE;
             }
             break;
         case "up": 
-             if (this.y - vertical_move > -100) { //allows for space above head
-                this.y = this.y - vertical_move;
+             if (this.y - VERTICAL_MOVE > -100) { //allows for space above head
+                this.y = this.y - VERTICAL_MOVE;
              }
             break;
         case "down":
-            if (this.y + vertical_move < board_height) { 
-               this.y = this.y + vertical_move;
+            if (this.y + VERTICAL_MOVE < BOARD_HEIGHT) { 
+               this.y = this.y + VERTICAL_MOVE;
             }
             break;
     }
     if(this.x < 0) {
         this.x = 0;
     }
-    else if (this.x + 100 >= board_width) {
-        this.x = board_width-100;
+    else if (this.x + 100 >= BOARD_WIDTH) {
+        this.x = BOARD_WIDTH-100;
     }
 
     if (this.y < 0) {
         this.y = 0;
     }
-    else if (this.y + 200 >= board_height) {
-        this.y = board_height - 200;
+    else if (this.y + 200 >= BOARD_HEIGHT) {
+        this.y = BOARD_HEIGHT - 200;
     }
 };
 // Instantiate objects and set array for enemy bugs//
@@ -145,12 +159,11 @@ for (var i = 0; i < 3; i++){
 }
 //Reset positions for new game after setTimeout on collision.//
 var reset = function () {
-        player.x = 10;
-        player.y = 400;
-        star.x = 400;
-        star.y = 5;
-        princess.x = 900;
-        princess.y = 900;
+    player.reset();
+    star.reset();
+    princess.reset();
+
+        
 };
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
